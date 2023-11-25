@@ -10,9 +10,87 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   search(isEven), donde isEven es una función que retorna true cuando recibe por parámetro un número par, busca un nodo cuyo valor sea un número par.
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
-function LinkedList() {}
+function LinkedList() {
+      this.head = null;
+}
 
-function Node(value) {}
+LinkedList.prototype.add = function(value){
+  //crear nuevo nodo
+  let newNode = new Node(value);
+  //guardar al nodo en la lista() al final)
+  //la lista esta vacia??
+
+  if(this.head === null){
+    this.head = new Node(value)
+    return;
+    //si la lista no esta vacia
+  }else{
+    let current = this.head
+    while(current.next !== null){
+      current = current.next
+    }
+    current.next = newNode;
+    return newNode;
+    }
+  
+}
+
+
+
+LinkedList.prototype.remove = function(value){
+  //ver si la lista esta vacia
+    if(this.head === null){
+      return null;
+    }
+    //la lista solo tiene un elemento
+  if(this.head && !this.head.next){
+    //agregamos el nodo eliminado para que el usuario lo pueda ver
+    let removedNode = this.head;
+    //eliminamos la referencia del this.head
+    this.head = this.head.next;
+    //retornamos el nodo removido
+    return removedNode.value;
+  }
+  let current = this.head
+  while(current.next.next){//mientras next.next tenga algo, avanzamos
+    current = current.next
+  }
+  let removedNode = current.next; 
+  current.next = null; //cuando el next.next no tenga algo  igualamos la referencia a null
+
+  return removedNode.value;
+}
+ 
+  
+  LinkedList.prototype.search = function(value){
+    //ver si la lista esta vacia devuelve null
+    if(this.head === null) return null;
+      //si no esta vacia que pasa?
+
+      //agarramos la referencia
+      let current = this.head;
+      //toma el primer nodo y
+      //mientras tengamos un nodo se ejecuta el codigo
+      while(current){
+        //revisa si el valor concuerda
+        if(current.value === value)return current.value; //evalua si la cabeza de la cadena es igual al valor recibido
+          //chequeamos que sea una funcion
+        else if(typeof value === 'function'){//verifica si el valor recibido es una funcion
+          //si el valor es una funcion debemos ejecutar la funcion pasandolo el valor del nodo actual
+          if(value(current.value)) return current.value;
+        }
+          //romper si o si el LOOP
+          current = current.next;
+        }
+    //si no encuentra el valor buscado
+    return null;
+      }
+
+
+function Node(value) {
+  this.value = value;
+  this.next = null;
+}
 
 /* EJERCICIO 2
 Implementar la clase HashTable.
@@ -27,7 +105,46 @@ La clase debe tener los siguientes métodos:
 
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
-function HashTable() {}
+function HashTable() {
+//como nos pide 35 buckerts vamos a crear la propiedad
+this.numbuckets = 35;
+//donde se van a guardar cada uno de esos buckets? en un array que creamos
+this.buckets = [];
+}
+
+HashTable.prototype.hash = function(key){
+  //creamos una key y lo encripta
+  let sum = 0;
+  for(let i = 0; i < key.length; i++){
+    //metodo para obtener el codigo ASCII de la key(palabra que me brindan para ser usada de clave) y suma cada caracter  del codigo
+    sum += key.charCodeAt(i);
+  }
+  return sum % this.numbuckets
+}
+
+HashTable.prototype.set = function(jey, value){
+  //validar si el key es un string
+  if(typeof key !== "string") throw new TypeError("Keys must be a string");
+
+  let index = this.hash(key)
+  //guardar valor
+  this.buckets[index] = {
+    key: value
+  }
+}
+HashTable.prototype.get = function(key){
+  //chequear si es un string
+  if(typeof key !== "string") throw new TypeError("Keys must be a string");
+  //encontrar el index
+  let index = this.hash(key);
+  return this.buckets[index][key];
+}
+HashTable.prototype.hasKey = function(key){
+ //chequear si es un string
+  if(typeof key !== "string") return true;
+  let i = this.hash(key);
+  return this.buckets[i].hasOwnProperty(key);
+}
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
