@@ -15,7 +15,6 @@ function BinarioADecimal(num) {
       //va recorrer de derecha a izquierda, y cada posicion va ser utilizada para elevar a digito
       deci = deci + digito*Math.pow(2, potencia)
    }
-   console.log(BinarioADecimal("1101"))
    return deci;
 }
 
