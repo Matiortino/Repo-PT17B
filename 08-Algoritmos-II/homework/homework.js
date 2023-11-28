@@ -54,10 +54,9 @@ function mergeSort(array) {
       }else{
         aux.push(mitad2[j]);
       }j++;
-   }
-  return aux.concat(mitad1.slice(i)).concat(mitad2.slice(j));
-
+    }
   }
+  return aux.concat(mitad1.slice(i)).concat(mitad2.slice(j));
 
   //okey probemos ahora
 }
