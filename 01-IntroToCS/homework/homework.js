@@ -1,6 +1,20 @@
 'use strict';
 function BinarioADecimal(num) {
+   let binario = num.toString();
+   //va pasar el numero a una cadena de texto = a un string
+   let binarioPartido = binario.split("");
+   //va separar cada elemento del string en un array
    
+   let deci = 0;
+
+   for(let i = 0; i < binarioPartido.length; i++){
+      //va recorrer el array
+      let digito = parseInt(binarioPartido[i]);
+      //a medida que recorre lo va unir en un numero entero
+      let potencia = binarioPartido.length - 1 - i;
+      //va recorrer de derecha a izquierda, y cada posicion va ser utilizada para elevar a digito
+      deci = deci + digito*Math.pow(2, potencia)
+   }
    console.log(BinarioADecimal("1101"))
    return deci;
 }
